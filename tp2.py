@@ -16,14 +16,14 @@ class Regle:
     def print_regle(self):
         print("regle:",self.regle)
         print("premisse: ",self.premisse )
-        print("concclusion :", self.conclusion)
+        print("conclusion :", self.conclusion)
 
 def lire_fait():
     # file = input("base des faits: ")
     file="BF1.txt"
     f= open(file,"r")
     line =f.readline().strip()
-    base_fait = list()
+    base_fait = []
     while line: 
         base_fait.append(
             Fait(line,-1) 
@@ -41,15 +41,11 @@ def lire_regle():
     base_regle = list()
     while line : 
         aux = line
-        regle = aux.strip()
-        # premisse = aux[1][ 
-        #     aux[1].find("si") +2 : 
-        #     aux[1].find("alors")
-        # ].strip().split(' et ')
-        
-        premisse=regle[2:].split('alors')[0].strip().split('et')
 
+        regle = aux.strip()
+        premisse=regle[2:].split('alors')[0].strip().split('et')
         conclusion = aux.split('alors')[1].strip().split("et")
+
         base_regle.append(
             Regle(
                 regle,
@@ -64,12 +60,10 @@ def lire_regle():
 def print_base_f(base):
     for index in range (0, len(base)):
         base[index].print_fait()
-        print("----------------------")
 
 def print_base_r(base):
     for index in range (0, len(base)):
         base[index].print_regle()
-        print("----------------------")
 
 def in_base(base_fait,fait):
     for i in range(0,len(base_fait)):
@@ -77,7 +71,7 @@ def in_base(base_fait,fait):
             return True
     return False
 
-def test(prem,tab):
+def verifAllPremissInTab(prem,tab):
     for j in range(0,len(prem)):
         if not(prem[j] in tab):
             return False
@@ -85,8 +79,8 @@ def test(prem,tab):
 
 
 def chainage_avant(base_fait,base_regle,fait) : 
-    tab_fait = list()
-    #creation d'un tableau de fait
+    tab_fait = []
+    #tableau de fait
     for i in range(0,len(base_fait)):
         tab_fait.append(base_fait[i].fait)
 
@@ -95,7 +89,7 @@ def chainage_avant(base_fait,base_regle,fait) :
         for i in range(0,len(base_regle)):
 
             prem =base_regle[i].premisse
-            if test(prem,tab_fait):
+            if verifAllPremissInTab(prem,tab_fait):
                 for k in range(0,len(base_regle[i].conclusion)):
                     base_fait.append(
                         Fait(
@@ -125,7 +119,7 @@ def chainage_arriere(base_fait,base_regle,but,trace=list()):
         for regle in base_regle:
             tr.append(regle.regle)
             if b in regle.conclusion:
-                if test(regle.premisse,base_fait):
+                if verifAllPremissInTab(regle.premisse,base_fait):
                     base_fait.append(b)
                     #print(b)
                     break
@@ -175,5 +169,3 @@ if len(tr) != 0 :
     trace = tr
 else:
     print(but,"non établi")
-
-
