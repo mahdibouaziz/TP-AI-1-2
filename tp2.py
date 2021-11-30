@@ -107,7 +107,6 @@ def chainage_avant(base_fait,base_regle,fait) :
     else :
         print(fait + " non-établi")
 
-
 def chainage_arriere(base_fait,base_regle,but,trace=list()):
     tr = []
     for b in but :
@@ -135,39 +134,53 @@ def chainage_arriere(base_fait,base_regle,but,trace=list()):
     return tr
 
 
-#initialisation
-base_fait=[]
-base_regle=[]
-but=""
-base_fait=lire_fait()
-base_regle=lire_regle()
-#saisie But
-but=input("But: ")
+#the main function
+while True:
+    #initialisation
+    base_fait=[]
+    base_regle=[]
+    but=""
+    base_fait=lire_fait()
+    base_regle=lire_regle()
+    #saisie But
+    but=input("But: ")
+    # print("Base faits: ")
+    # print_base_f(base_fait)
+    # print("Base Regle: ")
+    # print_base_r(base_regle)
+    print("1: chainage avant\n2: chainage arriere\n3: exit\n")
+    x=input("Rep: ")
+    if x=="1":
+        #chainage avant
+        chainage_avant(base_fait,base_regle,but)
+        #Ecrire la trace dans un fichier texte
+        f = open("traceAvant.txt","w")
+        print_base_f(base_fait)
+        for f1 in base_fait:
+            if (f1.explication!=-1):
+                tr=str(f1.explication)+"\n"
+                f.write(tr)
+        print("-------------------------\n")
+        f.close()
+    elif x=="2":
+        # Chainage arriere
+        tab_fait=[]
+        for ft in base_fait :
+            tab_fait.append(ft.fait)
+        trace=[]
+        b=[]
+        b.append(but)
+        tr=chainage_arriere(tab_fait,base_regle,b,trace)
+        if len(tr) != 0 :
+            print(but,"établi")
+        else:
+            print(but,"non établi")
 
-# print("Base faits: ")
-# print_base_f(base_fait)
-# print("Base Regle: ")
-# print_base_r(base_regle)
-
-#chainage avant
-chainage_avant(base_fait,base_regle,but)
-
-# Chainage arriere
-tab_fait=[]
-for ft in base_fait :
-    tab_fait.append(ft.fait)
-trace=[]
-b=[]
-b.append(but)
-tr=chainage_arriere(tab_fait,base_regle,b,trace)
-if len(tr) != 0 :
-    print(but,"établi")
-else:
-    print(but,"non établi")
-
-#afficher la trace
-print(tr)
-#Ecrire la trace dans un fichier texte
-f = open("trace.txt","w")
-tr=str(tr)
-f.write(tr)
+        #Ecrire la trace dans un fichier texte
+        f = open("traceArriere.txt","w")
+        tr=str(tr)
+        f.write(tr)
+        f.close()
+        print("-------------------------\n")
+    elif x=="3":
+        break

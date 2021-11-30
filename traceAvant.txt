@@ -1,0 +1,2 @@
+si mange_herbe alors non carnivore
+si plumes alors oiseau
