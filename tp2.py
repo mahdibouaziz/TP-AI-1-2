@@ -109,7 +109,7 @@ def chainage_avant(base_fait,base_regle,fait) :
 
 
 def chainage_arriere(base_fait,base_regle,but,trace=list()):
-    tr = list()
+    tr = []
     for b in but :
         if b in base_fait:
             tr.append('-1')
@@ -139,8 +139,6 @@ def chainage_arriere(base_fait,base_regle,but,trace=list()):
 base_fait=[]
 base_regle=[]
 but=""
-
-
 base_fait=lire_fait()
 base_regle=lire_regle()
 #saisie But
@@ -164,6 +162,12 @@ b.append(but)
 tr=chainage_arriere(tab_fait,base_regle,b,trace)
 if len(tr) != 0 :
     print(but,"établi")
-    trace = tr
 else:
     print(but,"non établi")
+
+#afficher la trace
+print(tr)
+#Ecrire la trace dans un fichier texte
+f = open("trace.txt","w")
+tr=str(tr)
+f.write(tr)
