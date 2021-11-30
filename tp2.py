@@ -19,7 +19,8 @@ class Regle:
         print("concclusion :", self.conclusion)
 
 def lire_fait():
-    file = input("Veuillez sélectionner la base des faits: ")
+    # file = input("base des faits: ")
+    file="BF1.txt"
     f= open(file,"r")
     line =f.readline().strip()
     base_fait = list()
@@ -32,9 +33,9 @@ def lire_fait():
     f.close()
     return base_fait
 
-
 def lire_regle():
-    file = input("Veuillez sélectionner la base des regles: ")
+    # file = input("base des regles: ")
+    file="BR1.txt"
     f= open(file,"r")
     line =f.readline()
     base_regle = list()
@@ -145,7 +146,6 @@ def chainage_arriere(base_fait,base_regle,but,trace=list()):
 #initialisation
 base_fait=[]
 base_regle=[]
-trace=[]
 but=""
 
 
@@ -159,6 +159,9 @@ but=input("But: ")
 # print("Base Regle: ")
 # print_base_r(base_regle)
 
+#chainage avant
+chainage_avant(base_fait,base_regle,but)
+
 # Chainage arriere
 tab_fait=[]
 for ft in base_fait :
@@ -166,16 +169,11 @@ for ft in base_fait :
 trace=[]
 b=[]
 b.append(but)
-
-#chainage avant
-# chainage_avant(base_fait,base_regle,but)
-
-#chainage arriere
 tr=chainage_arriere(tab_fait,base_regle,b,trace)
 if len(tr) != 0 :
-    print("But atteint")
+    print(but,"établi")
     trace = tr
 else:
-    print("But non atteint")
+    print(but,"non établi")
 
 
