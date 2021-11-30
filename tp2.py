@@ -90,17 +90,15 @@ def chainage_avant(base_fait,base_regle,fait) :
 
             prem =base_regle[i].premisse
             if verifAllPremissInTab(prem,tab_fait):
-                for k in range(0,len(base_regle[i].conclusion)):
-                    base_fait.append(
-                        Fait(
-                            base_regle[i].conclusion[k],
-                            base_regle[i].regle
-                        )
+                base_fait.append(
+                    Fait(
+                        base_regle[i].conclusion[0],
+                        base_regle[i].regle
                     )
-                    tab_fait.append(base_regle[i].conclusion[k].strip())
+                )
+                tab_fait.append(base_regle[i].conclusion[0].strip())
 
                 base_regle.remove(base_regle[i])
-                #print(tab_fait)
                 break
         if nb_fait == len(tab_fait):
             break 
